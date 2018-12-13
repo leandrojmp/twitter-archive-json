@@ -19,7 +19,7 @@ with open(json_file,'a') as out_file:
         timestamp = i['created_at']
         source = i['source'].split('>')[1].split('<')[0].lower()
         tweet = i['text'].replace('\n','').replace('"','').replace('\'','').replace('\\','')
-        tweet_lenght = len(tweet)
+        tweet_length = len(tweet)
         if tweet[:1] == "@":
             tweet_type = "reply"
         elif tweet[:3] == "RT ":
@@ -32,6 +32,6 @@ with open(json_file,'a') as out_file:
             geo = False
         if geo:
             geolocation = i['geo']['coordinates']
-            print('{\"timestamp\":\"%s\",\"tweet.id\":\"%s\",\"tweet.text\":\"%s\",\"tweet.type\":\"%s\",\"tweet.length\":%d,\"tweet.source\":\"%s\",\"tweet.geo\":%s}' % (timestamp, tweet_id, tweet, tweet_type, tweet_lenght, source, geolocation),file=out_file)
+            print('{\"timestamp\":\"%s\",\"tweet.id\":\"%s\",\"tweet.text\":\"%s\",\"tweet.type\":\"%s\",\"tweet.length\":%d,\"tweet.source\":\"%s\",\"tweet.geo\":%s}' % (timestamp, tweet_id, tweet, tweet_type, tweet_length, source, geolocation),file=out_file)
         else:
-            print('{\"timestamp\":\"%s\",\"tweet.id\":\"%s\",\"tweet.text\":\"%s\",\"tweet.type\":\"%s\",\"tweet.length\":%d,\"tweet.source\":\"%s\"}' % (timestamp, tweet_id, tweet, tweet_type, tweet_lenght, source),file=out_file)
+            print('{\"timestamp\":\"%s\",\"tweet.id\":\"%s\",\"tweet.text\":\"%s\",\"tweet.type\":\"%s\",\"tweet.length\":%d,\"tweet.source\":\"%s\"}' % (timestamp, tweet_id, tweet, tweet_type, tweet_length, source),file=out_file)

@@ -19,4 +19,4 @@ at this moment i'm working with the following fields:
 two new fields are created:
 
 - `tweet.type`: can have the value of `tweet`, `reply` or `retweet` based on `tweet.text`
-- `tweet.lenght`: the lenght of `tweet.text`
+- `tweet.length`: the length of `tweet.text`
