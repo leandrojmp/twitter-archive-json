@@ -18,7 +18,7 @@ with open(json_file,'a') as out_file:
         tweet_id = i['id']
         timestamp = i['created_at']
         source = i['source'].split('>')[1].split('<')[0].lower()
-        tweet = i['text'].replace('\n','').replace('"','').replace('\'','')
+        tweet = i['text'].replace('\n','').replace('"','').replace('\'','').replace('\\','')
         tweet_lenght = len(tweet)
         if tweet[:1] == "@":
             tweet_type = "reply"
