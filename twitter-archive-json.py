@@ -8,7 +8,7 @@ src_dir = argv[1]
 #js_file = argv[1]
 
 for f in os.listdir(src_dir):
-    json_file = os.path.basename(f).split('.')[0] + '.json'
+    json_file = 'json/' + os.path.basename(f).split('.')[0] + '.json'
     # first tests, pass the file as an argument
     with open(src_dir + f,'r') as j_file:
         discard = next(j_file)
@@ -28,7 +28,9 @@ for f in os.listdir(src_dir):
             else:
                 tweet_type = "tweet"
             if "coordinates" in i['geo']:
-                geolocation = i['geo']['coordinates']
-                print('{\"timestamp\":\"%s\",\"tweet.id\":\"%s\",\"tweet.text\":\"%s\",\"tweet.type\":\"%s\",\"tweet.length\":%d,\"tweet.source\":\"%s\",\"tweet.geo\":%s}' % (timestamp, tweet_id, tweet, tweet_type, tweet_length, source, geolocation),file=out_file)
+                geo_lat = i['geo']['coordinates'][0]
+                geo_lon = i['geo']['coordinates'][1]
+                geolocation = str(geo_lat) + "," + str(geo_lon)
+                print('{\"tweet.timestamp\":\"%s\",\"tweet.id\":\"%s\",\"tweet.text\":\"%s\",\"tweet.type\":\"%s\",\"tweet.length\":%d,\"tweet.source\":\"%s\",\"tweet.geo\":\"%s\"}' % (timestamp, tweet_id, tweet, tweet_type, tweet_length, source, geolocation),file=out_file)
             else:
-                print('{\"timestamp\":\"%s\",\"tweet.id\":\"%s\",\"tweet.text\":\"%s\",\"tweet.type\":\"%s\",\"tweet.length\":%d,\"tweet.source\":\"%s\"}' % (timestamp, tweet_id, tweet, tweet_type, tweet_length, source),file=out_file)
+                print('{\"tweet.timestamp\":\"%s\",\"tweet.id\":\"%s\",\"tweet.text\":\"%s\",\"tweet.type\":\"%s\",\"tweet.length\":%d,\"tweet.source\":\"%s\"}' % (timestamp, tweet_id, tweet, tweet_type, tweet_length, source),file=out_file)

@@ -1,0 +1,43 @@
+{
+    "order" : 0,
+    "version" : 1,
+    "index_patterns" : [
+      "twitter-*"
+    ],
+    "settings" : {
+      "index" : {
+        "mapping" : {
+          "ignore_malformed" : "true"
+        },
+        "refresh_interval" : "5s",
+        "number_of_shards" : "1",
+        "number_of_replicas" : "0"
+      }
+    },
+    "mappings" : {
+        "twitter" : {
+            "_all" : {
+                "enabled" : false
+            },
+            "properties" : {
+                "tweet" : {
+                    "properties" : {
+                        "id" : { "type" : "keyword" },
+                        "source" : { "type" : "keyword" },
+                        "timestamp" : { "type" : "date" },
+                        "length" : { "type" : "integer" },
+                        "geo" : { "type" : "geo_point" },
+                        "text" : { "type" : "text" },
+                        "type" : { "type" : "keyword" }
+                    }
+                },
+                "type" : { "type" : "keyword" },
+                "tags" : { "type" : "keyword" },
+                "@timestamp" : {
+                    "format" : "strict_date_optional_time||epoch_millis",
+                    "type" : "date"
+                }
+            }
+        }
+    }
+}
