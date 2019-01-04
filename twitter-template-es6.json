@@ -28,7 +28,6 @@
                         "length" : { "type" : "integer" },
                         "geo" : { "type" : "geo_point" },
                         "text" : { "type" : "text" },
-                        "link" : { "type" : "keyword" },
                         "type" : { "type" : "keyword" }
                     }
                 },
