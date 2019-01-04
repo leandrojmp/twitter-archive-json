@@ -1,6 +1,6 @@
 {
     "order" : 0,
-    "version" : 1,
+    "version" : 2,
     "index_patterns" : [
       "twitter-*"
     ],
@@ -15,7 +15,7 @@
       }
     },
     "mappings" : {
-        "twitter" : {
+        "doc" : {
             "_all" : {
                 "enabled" : false
             },
