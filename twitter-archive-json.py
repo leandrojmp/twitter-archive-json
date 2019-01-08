@@ -7,7 +7,6 @@ from sys import argv
 # input and output files
 
 src_dir = argv[1]
-#js_file = argv[1]
 
 # create days and months lists
 days = list(calendar.day_name)
@@ -22,38 +21,35 @@ for f in os.listdir(src_dir):
 
     with open(json_file,'a') as out_file:
         for i in j_data:
+            tweets = {}
             tweet_users = []
-            tweet_id = i['id']
-            timestamp = i['created_at']
+            tweets['tweet.id'] = str(i['id'])
+            tweets['tweet.timestamp'] = i['created_at']
             # create a date time variable to extract the year, the day of week and the month
-            tweet_date = datetime.datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S +0000')
-            tweet_year = tweet_date.year
-            tweet_day = days[tweet_date.weekday()].lower()
-            tweet_month = months[tweet_date.month].lower()
+            tweet_date = datetime.datetime.strptime(tweets['tweet.timestamp'], '%Y-%m-%d %H:%M:%S +0000')
+            tweets['tweet.year'] = tweet_date.year
+            tweets['tweet.day'] = days[tweet_date.weekday()].lower()
+            tweets['tweet.month'] = months[tweet_date.month].lower()
             # 
-            source = i['source'].split('>')[1].split('<')[0].lower()
+            tweets['tweet.source'] = i['source'].split('>')[1].split('<')[0].lower()
             tweet = i['text'].replace('\n','').replace('"','').replace('\'','').replace('\\','')
-            tweet_length = len(tweet)
+            tweets['tweet.length'] = len(tweet)
+            tweets['tweet.text'] = tweet
             if tweet[:1] == "@":
-                tweet_type = "reply"
+                tweets['tweet.type'] = "reply"
             elif tweet[:3] == "RT ":
-                tweet_type = "retweet"
+                tweets['tweet.type'] = "retweet"
             else:
-                tweet_type = "tweet"
-            if tweet_type == "reply":
+                tweets['tweet.type'] = "tweet"
+            if tweets['tweet.type'] == "reply":
                 for u in tweet.split():
                     if u[0] == "@":
                         tweet_users.append(u)
+                tweets['tweet.users'] = tweet_users
             if "coordinates" in i['geo']:
                 geo_lat = i['geo']['coordinates'][0]
                 geo_lon = i['geo']['coordinates'][1]
-                geolocation = str(geo_lat) + "," + str(geo_lon)
-                if tweet_users:
-                    print('{\"tweet.timestamp\":\"%s\",\"tweet.year\":\"%d\",\"tweet.day\":\"%s\",\"tweet.month\":\"%s\",\"tweet.id\":\"%s\",\"tweet.text\":\"%s\",\"tweet.type\":\"%s\",\"tweet.length\":%d,\"tweet.users\":\"%s\",\"tweet.source\":\"%s\",\"tweet.geo\":\"%s\"}' % (timestamp, tweet_year, tweet_day, tweet_month, tweet_id, tweet, tweet_type, tweet_length, tweet_users, source, geolocation),file=out_file)
-                else:
-                    print('{\"tweet.timestamp\":\"%s\",\"tweet.year\":\"%d\",\"tweet.day\":\"%s\",\"tweet.month\":\"%s\",\"tweet.id\":\"%s\",\"tweet.text\":\"%s\",\"tweet.type\":\"%s\",\"tweet.length\":%d,\"tweet.source\":\"%s\",\"tweet.geo\":\"%s\"}' % (timestamp, tweet_year, tweet_day, tweet_month, tweet_id, tweet, tweet_type, tweet_length, source, geolocation),file=out_file)
-            else:
-                if tweet_users:
-                    print('{\"tweet.timestamp\":\"%s\",\"tweet.year\":\"%d\",\"tweet.day\":\"%s\",\"tweet.month\":\"%s\",\"tweet.id\":\"%s\",\"tweet.text\":\"%s\",\"tweet.type\":\"%s\",\"tweet.length\":%d,\"tweet.users\":\"%s\",\"tweet.source\":\"%s\"}' % (timestamp, tweet_year, tweet_day, tweet_month, tweet_id, tweet, tweet_type, tweet_length, tweet_users, source),file=out_file)
-                else:
-                    print('{\"tweet.timestamp\":\"%s\",\"tweet.year\":\"%d\",\"tweet.day\":\"%s\",\"tweet.month\":\"%s\",\"tweet.id\":\"%s\",\"tweet.text\":\"%s\",\"tweet.type\":\"%s\",\"tweet.length\":%d,\"tweet.source\":\"%s\"}' % (timestamp, tweet_year, tweet_day, tweet_month, tweet_id, tweet, tweet_type, tweet_length, source),file=out_file)
+                tweets['tweet.geo'] = str(geo_lat) + "," + str(geo_lon)
+            
+            json.dump(tweets, out_file)
+            out_file.write('\n')
