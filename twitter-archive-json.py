@@ -16,7 +16,7 @@ for f in os.listdir(src_dir):
     json_file = 'json/' + os.path.basename(f).split('.')[0] + '.json'
     # first tests, pass the file as an argument
     with open(src_dir + f,'r') as j_file:
-        discard = next(j_file)
+        next(j_file)
         j_data = json.loads(j_file.read())
 
     with open(json_file,'a') as out_file:
