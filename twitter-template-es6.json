@@ -1,8 +1,8 @@
 {
     "order" : 0,
-    "version" : 3,
+    "version" : 4,
     "index_patterns" : [
-      "twitter-*"
+      "twitter","twitter-*"
     ],
     "settings" : {
       "index" : {
@@ -27,7 +27,19 @@
                         "timestamp" : { "type" : "date" },
                         "length" : { "type" : "integer" },
                         "geo" : { "type" : "geo_point" },
-                        "text" : { "type" : "text" },
+                        "text" : { 
+                          "type" : "text",
+                          "fields": {
+                            "en" :{
+                              "type": "text",
+                              "analyzer": "english"
+                            },
+                            "br" :{
+                              "type": "text",
+                              "analyzer": "brazilian"
+                            }
+                          }
+                        },
                         "users" : { "type" : "keyword" },
                         "year" : { "type" : "integer" },
                         "month" : { "type" : "keyword" },
