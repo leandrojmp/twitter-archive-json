@@ -15,30 +15,43 @@
       }
     },
     "mappings" : {
-        "_doc" :{
-            "properties" : {
-                "tweet" : {
-                    "properties" : {
-                        "id" : { "type" : "keyword" },
-                        "source" : { "type" : "keyword" },
-                        "timestamp" : { "type" : "date" },
-                        "length" : { "type" : "long" },
-                        "geo" : { "type" : "geo_point" },
-                        "text" : { "type" : "text" },
-                        "users" : { "type" : "keyword" },
-                        "year" : { "type" : "long" },
-                        "month" : { "type" : "keyword" },
-                        "day" : { "type" : "keyword" },
-                        "type" : { "type" : "keyword" }
+        "properties" : {
+          "tweet" : {
+              "properties" : {
+                  "id" : { "type" : "keyword" },
+                  "source" : { "type" : "keyword" },
+                  "timestamp" : { 
+                    "type" : "date",
+                    "format": "yyyy-MM-dd HH:mm:ss Z"
+                   },
+                  "length" : { "type" : "integer" },
+                  "geo" : { "type" : "geo_point" },
+                  "text" : { 
+                    "type" : "text",
+                    "fields": {
+                      "en" :{
+                        "type": "text",
+                        "analyzer": "english"
+                      },
+                      "br" :{
+                        "type": "text",
+                        "analyzer": "brazilian"
+                      }
                     }
-                },
-                "type" : { "type" : "keyword" },
-                "tags" : { "type" : "keyword" },
-                "@timestamp" : {
-                    "format" : "strict_date_optional_time||epoch_millis",
-                    "type" : "date"
-                }
-            }
-        } 
+                  },
+                  "users" : { "type" : "keyword" },
+                  "year" : { "type" : "integer" },
+                  "month" : { "type" : "keyword" },
+                  "day" : { "type" : "keyword" },
+                  "type" : { "type" : "keyword" }
+              }
+          },
+          "type" : { "type" : "keyword" },
+          "tags" : { "type" : "keyword" },
+          "@timestamp" : {
+              "format" : "strict_date_optional_time||epoch_millis",
+              "type" : "date"
+          }
+        }
     }
 }
