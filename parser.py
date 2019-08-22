@@ -1,3 +1,7 @@
+# parser.py
+# 
+# parse the tweet archive file
+
 import json
 import os
 import datetime
