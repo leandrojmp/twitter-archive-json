@@ -1,4 +1,4 @@
-# twitter-archive-json
+# twitter-archive-parser
 
 scripts to convert the `.js` files containing your tweets from your twitter archive into `.json` files that can be pushed into `elasticsearch` for analysis and search.
 
