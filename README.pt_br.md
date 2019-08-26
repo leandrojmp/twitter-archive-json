@@ -7,4 +7,4 @@ Após realizar o download e descompactar o arquivo, você verá alguns arquivos 
 
 ![tweets file](images/twitter-files.png)
 
-O arquiv `tweet.js` contêm uma array onde cada item é um tweet no formato de um objeto json multi-linha, o script [`parser.py`](parser.py) lê esse arquivo como um parâmetro e salva os itens presentes na array em um arquivo json de saída onde cada linha corresponde a um tweet, dessa forma ele pode ser indexado no elasticsearch utilizando um pipeline do logstash.
+O arquivo `tweet.js` contêm um array onde cada item é um tweet no formato de um objeto json multi-linha, o script [`parser.py`](parser.py) lê esse arquivo como um parâmetro e salva os itens presentes no array em um arquivo json de saída onde cada linha corresponde a um tweet, dessa forma ele pode ser indexado no elasticsearch utilizando um pipeline do logstash.
