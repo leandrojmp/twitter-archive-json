@@ -1,8 +1,8 @@
 {
     "order" : 0,
-    "version" : 3,
+    "version" : 1,
     "index_patterns" : [
-      "twitter-*"
+      "twitter"
     ],
     "settings" : {
       "index" : {
@@ -16,38 +16,224 @@
     },
     "mappings" : {
         "properties" : {
-          "tweet" : {
-              "properties" : {
-                  "id" : { "type" : "keyword" },
-                  "source" : { "type" : "keyword" },
-                  "timestamp" : { 
-                    "type" : "date",
-                    "format": "yyyy-MM-dd HH:mm:ss Z"
-                   },
-                  "length" : { "type" : "integer" },
-                  "geo" : { "type" : "geo_point" },
-                  "text" : { 
-                    "type" : "text",
-                    "fields": {
-                      "en" :{
-                        "type": "text",
-                        "analyzer": "english"
+          "coordinates": {
+            "properties": {
+              "coordinates" : { "type" : "geo_point" },
+              "type" : { "type" : "keyword" }
+            }
+          },
+          "created_at" : { 
+            "format": "EEE MMM dd HH:mm:ss Z yyyy",
+            "type" : "date" 
+          },
+          "display_text_range" : { "type" : "keyword" },
+          "entities": {
+            "properties": {
+              "hashtags": {
+                "properties": {
+                  "indices": { "type" : "keyword" },
+                  "text": { "type" : "keyword" }
+                }
+              },
+              "media": {
+                "properties": {
+                  "display_url": { "type" : "keyword" },
+                  "expanded_url": { "type" : "keyword" },
+                  "id": { "type" : "keyword" },
+                  "id_str": { "type" : "keyword" },
+                  "indices": { "type" : "keyword" },
+                  "media_url": { "type" : "keyword" },
+                  "media_url_https": { "type" : "keyword" },
+                  "source_status_id": { "type" : "keyword" },
+                  "source_status_id_str": { "type" : "keyword" },
+                  "source_user_id": { "type" : "keyword" },
+                  "source_user_id_str": { "type" : "keyword" },
+                  "type": { "type" : "keyword" },
+                  "url": { "type" : "keyword" },
+                  "sizes": {
+                    "properties": {
+                      "large": {
+                        "properties": {
+                          "h": { "type" : "keyword" },
+                          "w": { "type" : "keyword" },
+                          "resize": { "type" : "keyword" }
+                        }
                       },
-                      "br" :{
-                        "type": "text",
-                        "analyzer": "brazilian"
+                      "medium": {
+                        "properties": {
+                          "h": { "type" : "keyword" },
+                          "w": { "type" : "keyword" },
+                          "resize": { "type" : "keyword" }
+                        }
+                      },
+                      "small": {
+                        "properties": {
+                          "h": { "type" : "keyword" },
+                          "w": { "type" : "keyword" },
+                          "resize": { "type" : "keyword" }
+                        }
+                      },
+                      "thumb": {
+                        "properties": {
+                          "h": { "type" : "keyword" },
+                          "w": { "type" : "keyword" },
+                          "resize": { "type" : "keyword" }
+                        }
+                      }
+                    }
+                  }                 
+                }
+              },
+              "symbols": {
+                "properties": {
+                  "indices": { "type" : "keyword" },
+                  "text": { "type" : "keyword" }                  
+                }
+              },
+              "urls": {
+                "properties": {
+                  "display_url": { "type" : "keyword" },
+                  "expanded_url": { "type" : "keyword" },
+                  "indices": { "type" : "keyword" },
+                  "url": { "type" : "keyword" }                  
+                }
+              },
+              "user_mentions": {
+                "properties": {
+                  "id": { "type" : "keyword" },
+                  "id_str": { "type" : "keyword" },
+                  "indices": { "type" : "keyword" },
+                  "name": { "type" : "keyword" },
+                  "screen_name": { "type" : "keyword" }                  
+                }
+              }
+            }
+          },
+          "extended_entities": {
+            "properties": {
+              "media": {
+                "properties": {
+                  "display_url": { "type" : "keyword" },
+                  "expanded_url": { "type" : "keyword" },
+                  "id": { "type" : "keyword" },
+                  "id_str": { "type" : "keyword" },
+                  "indices": { "type" : "keyword" },
+                  "media_url": { "type" : "keyword" },
+                  "media_url_https": { "type" : "keyword" },
+                  "source_status_id": { "type" : "keyword" },
+                  "source_status_id_str": { "type" : "keyword" },
+                  "source_user_id": { "type" : "keyword" },
+                  "source_user_id_str": { "type" : "keyword" },
+                  "type": { "type" : "keyword" },
+                  "url": { "type" : "keyword" },
+                  "additional_media_info": {
+                    "properties": {
+                      "title": { "type" : "keyword" },
+                      "description": { "type" : "keyword" },
+                      "call_to_actions": {
+                        "properties": {
+                          "visit_site": {
+                            "properties": {
+                              "url": { "type" : "keyword" }
+                            }
+                          },
+                          "watch_now": {
+                            "properties": {
+                              "url": { "type" : "keyword" }
+                            }
+                          }
+                        }
                       }
                     }
                   },
-                  "users" : { "type" : "keyword" },
-                  "year" : { "type" : "integer" },
-                  "month" : { "type" : "keyword" },
-                  "day" : { "type" : "keyword" },
-                  "type" : { "type" : "keyword" }
+                  "video_info": {
+                    "properties": {
+                      "aspect_ratio": { "type" : "keyword" },
+                      "duration_millis": { "type" : "keyword" },
+                      "variants": {
+                        "properties": {
+                          "bitrate": { "type" : "keyword" },
+                          "content_type": { "type" : "keyword" },
+                          "url": { "type" : "keyword" }
+                        }
+                      }
+                    }
+                  },
+                  "sizes": {
+                    "properties": {
+                      "large": {
+                        "properties": {
+                          "h": { "type" : "keyword" },
+                          "w": { "type" : "keyword" },
+                          "resize": { "type" : "keyword" }
+                        }
+                      },
+                      "medium": {
+                        "properties": {
+                          "h": { "type" : "keyword" },
+                          "w": { "type" : "keyword" },
+                          "resize": { "type" : "keyword" }
+                        }
+                      },
+                      "small": {
+                        "properties": {
+                          "h": { "type" : "keyword" },
+                          "w": { "type" : "keyword" },
+                          "resize": { "type" : "keyword" }
+                        }
+                      },
+                      "thumb": {
+                        "properties": {
+                          "h": { "type" : "keyword" },
+                          "w": { "type" : "keyword" },
+                          "resize": { "type" : "keyword" }
+                        }
+                      }
+                    }
+                  }                 
+                }
               }
+            }            
           },
+          "favorite_count" : { "type" : "integer" },
+          "favorited" : { "type" : "boolean" },
+          "full_text": {
+            "type" : "text",
+            "fields": {
+              "en" :{
+                "type": "text",
+                "analyzer": "english"
+              },
+              "br" :{
+                "type": "text",
+                "analyzer": "brazilian"
+              }
+            }
+          },
+          "geo": {
+            "properties": {
+              "coordinates" : { "type" : "geo_point" },
+              "type" : { "type" : "keyword" }
+            }
+          },
+          "host" : { "type" : "keyword" },
+          "id" : { "type" : "keyword" },
+          "id_str" : { "type" : "keyword" },
+          "in_reply_to_screen_name" : { "type" : "keyword" },
+          "in_reply_to_status_id" : { "type" : "keyword" },
+          "in_reply_to_status_id_str" : { "type" : "keyword" },
+          "in_reply_to_user_id" : { "type" : "keyword" },
+          "in_reply_to_user_id_str" : { "type" : "keyword" },
+          "lang" : { "type" : "keyword" },
+          "message" : { "type" : "keyword" },
+          "possibly_sensitive" : { "type" : "boolean" },
+          "retweet_count" : { "type" : "integer" },
+          "retweeted" : { "type" : "boolean" },
+          "source" : { "type" : "keyword" },
           "type" : { "type" : "keyword" },
           "tags" : { "type" : "keyword" },
+          "truncated" : { "type" : "boolean" },
+          "@version" : { "type" : "keyword" },
           "@timestamp" : {
               "format" : "strict_date_optional_time||epoch_millis",
               "type" : "date"
