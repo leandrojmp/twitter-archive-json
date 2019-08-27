@@ -26,5 +26,9 @@ json_data = json.loads(archive_data)
 # save each tweet as a line in the output file
 with open(parsed_file,'a') as dst_file:
     for tweet in json_data:
+        # check if the tweet has the geo field and convert it to string
+        if "geo" in tweet:
+            geo_str = str(tweet['geo']['coordinates'][0]) + "," + str(tweet['geo']['coordinates'][1])
+            tweet['geo']['coordinates'] = geo_str
         json.dump(tweet,dst_file)
         dst_file.write('\n')
