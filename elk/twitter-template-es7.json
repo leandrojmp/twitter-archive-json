@@ -216,6 +216,12 @@
               "type" : { "type" : "keyword" }
             }
           },
+          "tweet": {
+            "properties": {
+              "length" : { "type" : "integer" },
+              "type" : { "type" : "keyword" }
+            }
+          },
           "host" : { "type" : "keyword" },
           "id" : { "type" : "keyword" },
           "id_str" : { "type" : "keyword" },
