@@ -9,12 +9,17 @@
         "mapping" : {
           "ignore_malformed" : "true"
         },
+        "query": {
+          "default_field": ["tweet.full_text"]
+        },
         "refresh_interval" : "5s",
         "number_of_shards" : "1",
         "number_of_replicas" : "0"
       }
     },
     "mappings" : {
+      "properties": {
+        "tweet": {
         "properties" : {
           "coordinates": {
             "properties": {
@@ -216,12 +221,8 @@
               "type" : { "type" : "keyword" }
             }
           },
-          "tweet": {
-            "properties": {
-              "length" : { "type" : "integer" },
-              "type" : { "type" : "keyword" }
-            }
-          },
+          "tweet_length" : { "type" : "integer" },
+          "tweet_type" : { "type" : "keyword" },
           "host" : { "type" : "keyword" },
           "id" : { "type" : "keyword" },
           "id_str" : { "type" : "keyword" },
@@ -231,19 +232,21 @@
           "in_reply_to_user_id" : { "type" : "keyword" },
           "in_reply_to_user_id_str" : { "type" : "keyword" },
           "lang" : { "type" : "keyword" },
-          "message" : { "type" : "keyword" },
           "possibly_sensitive" : { "type" : "boolean" },
           "retweet_count" : { "type" : "integer" },
           "retweeted" : { "type" : "boolean" },
           "source" : { "type" : "keyword" },
           "type" : { "type" : "keyword" },
-          "tags" : { "type" : "keyword" },
-          "truncated" : { "type" : "boolean" },
-          "@version" : { "type" : "keyword" },
-          "@timestamp" : {
-              "format" : "strict_date_optional_time||epoch_millis",
-              "type" : "date"
-          }
+          "truncated" : { "type" : "boolean" }
+        }
+        },
+        "@version" : { "type" : "keyword" },
+        "message" : { "type" : "text" },
+        "tags" : { "type" : "keyword" },
+        "@timestamp" : {
+            "format" : "strict_date_optional_time||epoch_millis",
+            "type" : "date"
         }
     }
+  }
 }

@@ -7,8 +7,6 @@
 
 import json
 import os
-import datetime
-import calendar
 import argparse
 
 # arguments
@@ -41,25 +39,23 @@ json_data = json.loads(archive_data)
 # save each tweet as a line in the output file
 with open(parsed_file,'a') as dst_file:
     for tweet in json_data:
-        flatten_tweet = tweet['tweet']
         # if -e 0 or not present, do not parse the entities and extended_entities fields
         if args.e == 0:
-            flatten_tweet.pop("entities", None)
-            flatten_tweet.pop("extended_entities", None)
-        flatten_tweet['source'] = flatten_tweet['source'].split('>')[1].split('<')[0].lower()
-        flatten_tweet['tweet'] = {}
-        flatten_tweet['tweet']['length'] = len(flatten_tweet['full_text'])
+            tweet['tweet'].pop("entities", None)
+            tweet['tweet'].pop("extended_entities", None)
+        tweet['tweet']['source'] = tweet['tweet']['source'].split('>')[1].split('<')[0]
+        tweet['tweet']['tweet_length'] = len(tweet['tweet']['full_text'])
         # check the type of the tweet
-        if flatten_tweet['full_text'][:1] == "@":
-            flatten_tweet['tweet']['type'] = "reply"
-        elif flatten_tweet['full_text'][:3] == "RT ":
-            flatten_tweet['tweet']['type'] = "retweet"
+        if tweet['tweet']['full_text'][:1] == "@":
+            tweet['tweet']['tweet_type'] = "reply"
+        elif tweet['tweet']['full_text'][:3] == "RT ":
+            tweet['tweet']['tweet_type'] = "retweet"
         else:
-            flatten_tweet['tweet']['type'] = "tweet"
+            tweet['tweet']['tweet_type'] = "tweet"
         # check if the tweet has the geo field and convert it to string
-        if "geo" in flatten_tweet:
-            geo_str = str(flatten_tweet['geo']['coordinates'][0]) + "," + str(flatten_tweet['geo']['coordinates'][1])
-            flatten_tweet['geo']['coordinates'] = geo_str
-            flatten_tweet.pop("coordinates", None)
-        json.dump(flatten_tweet,dst_file)
+        if "geo" in tweet['tweet']:
+            geo_str = str(tweet['tweet']['geo']['coordinates'][0]) + "," + str(tweet['tweet']['geo']['coordinates'][1])
+            tweet['tweet']['geo']['coordinates'] = geo_str
+            tweet['tweet'].pop("coordinates", None)
+        json.dump(tweet,dst_file)
         dst_file.write('\n')
