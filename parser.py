@@ -43,6 +43,7 @@ with open(parsed_file,'a') as dst_file:
         if args.e == 0:
             tweet['tweet'].pop("entities", None)
             tweet['tweet'].pop("extended_entities", None)
+        # remove the html tags from the source field
         tweet['tweet']['source'] = tweet['tweet']['source'].split('>')[1].split('<')[0]
         tweet['tweet']['tweet_length'] = len(tweet['tweet']['full_text'])
         # check the type of the tweet
