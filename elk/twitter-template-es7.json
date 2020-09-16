@@ -236,6 +236,7 @@
           "retweet_count" : { "type" : "integer" },
           "retweeted" : { "type" : "boolean" },
           "source" : { "type" : "keyword" },
+          "weekday" : { "type" : "keyword" },
           "type" : { "type" : "keyword" },
           "truncated" : { "type" : "boolean" }
         }
